@@ -1,4 +1,4 @@
 # GradelPlugin
 Gradle Plugin Creation
 
-Version Name = 1.0
+VersionName:1.1

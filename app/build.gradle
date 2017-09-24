@@ -8,7 +8,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,4 +27,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+}
+
+task bumpVersion {
+    group 'PluginBasics'
+    description 'Update README version number with application version number'
+
+    File readme = new File(rootDir.absolutePath + "/README.md")
+    String contents = readme.getText('UTF-8')
+    contents = contents.replaceAll("VersionName:.*", "VersionName:${android.defaultConfig.versionName}")
+    readme.write(contents)
 }
