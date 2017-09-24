@@ -8,7 +8,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
-        versionName "1.1"
+        versionName "1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,12 +29,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task bumpVersion {
-    group 'PluginBasics'
-    description 'Update README version number with application version number'
+apply plugin: BumpVersion
 
-    File readme = new File(rootDir.absolutePath + "/README.md")
-    String contents = readme.getText('UTF-8')
-    contents = contents.replaceAll("VersionName:.*", "VersionName:${android.defaultConfig.versionName}")
-    readme.write(contents)
+class BumpVersion implements Plugin<Project> {
+    @Override
+    void apply(Project target) {
+        target.task('bumpVersion') {
+            group 'PluginBasics'
+            description 'Update README version number with application version number'
+
+            File readme = new File(target.rootDir.absolutePath + "/README.md")
+            String contents = readme.getText('UTF-8')
+            contents = contents.replaceAll("VersionName:.*", "VersionName:${target.android.defaultConfig.versionName}")
+            readme.write(contents)
+        }
+    }
 }
